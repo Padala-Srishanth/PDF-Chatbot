@@ -1,5 +1,5 @@
 
-const XAI_API_KEY = "xai-VhYHmYYg1I2Hhny2K4CGj7IAmx8aP7XDrLgNUHgYzHirgphABrfZaBomFjyzpNztiXpJcIbhNcYMfyWh";
+const XAI_API_KEY = "AIzaSyBF3r_s7Zlgcb7pA25ovtruwczZEGGTcno";
 const XAI_API_URL = "https://api.x.ai/v1/chat/completions";
 
 export const askQuestionAboutDocument = async (question: string, documentName: string): Promise<string> => {
