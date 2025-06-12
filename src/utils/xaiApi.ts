@@ -28,13 +28,26 @@ export const askQuestionAboutDocument = async (question: string, documentName: s
     });
 
     if (!response.ok) {
-      throw new Error(`API request failed: ${response.status}`);
+      // Try to get the error message from the response
+      const errorData = await response.json().catch(() => null);
+      const errorMessage = errorData?.error || `API request failed with status ${response.status}`;
+      
+      console.error('xAI API Error:', errorMessage);
+      
+      // Return a more specific error message based on the status
+      if (response.status === 403) {
+        return "❌ API Error: Your xAI account doesn't have sufficient credits. Please add credits at https://console.x.ai/ to use the AI features.";
+      } else if (response.status === 401) {
+        return "❌ API Error: Invalid API key. Please check your xAI API credentials.";
+      } else {
+        return `❌ API Error: ${errorMessage}`;
+      }
     }
 
     const data = await response.json();
     return data.choices[0]?.message?.content || "I apologize, but I couldn't generate a response at this time.";
   } catch (error) {
     console.error('Error calling xAI API:', error);
-    return "I'm sorry, there was an error processing your question. Please try again.";
+    return "❌ Network Error: Unable to connect to the AI service. Please check your internet connection and try again.";
   }
 };
