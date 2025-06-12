@@ -1,9 +1,9 @@
-
 import { useState } from "react";
 import { Header } from "@/components/Header";
 import { DocumentList } from "@/components/DocumentList";
 import { ChatInterface } from "@/components/ChatInterface";
 import { UploadArea } from "@/components/UploadArea";
+import { askQuestionAboutDocument } from "@/utils/xaiApi";
 
 export interface Document {
   id: string;
@@ -66,18 +66,29 @@ const Index = () => {
     setMessages(prev => [...prev, userMessage]);
     setIsProcessing(true);
 
-    // Simulate API call delay
-    setTimeout(() => {
+    try {
+      const answer = await askQuestionAboutDocument(question, selectedDocument.name);
+      
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         type: 'assistant',
-        content: `Based on the content of "${selectedDocument.name}", I can provide you with relevant information. This is a mock response demonstrating how the AI would analyze your PDF and provide contextual answers to your questions.`,
+        content: answer,
         timestamp: new Date()
       };
       
       setMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      console.error('Error getting answer:', error);
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        type: 'assistant',
+        content: "I'm sorry, there was an error processing your question. Please try again.",
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsProcessing(false);
-    }, 2000);
+    }
   };
 
   const selectDocument = (doc: Document) => {
