@@ -3,6 +3,8 @@ import { Header } from "@/components/Header";
 import { DocumentList } from "@/components/DocumentList";
 import { ChatInterface } from "@/components/ChatInterface";
 import { askQuestionAboutDocument } from "@/utils/xaiApi";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export interface Document {
   id: string;
@@ -26,6 +28,9 @@ const Index = () => {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleFileUpload = (files: FileList) => {
+    let successCount = 0;
+    let errorCount = 0;
+
     Array.from(files).forEach(file => {
       if (file.type === 'application/pdf') {
         const newDoc: Document = {
@@ -37,6 +42,7 @@ const Index = () => {
         };
         
         setDocuments(prev => [...prev, newDoc]);
+        successCount++;
         
         // Simulate processing time
         setTimeout(() => {
@@ -47,9 +53,23 @@ const Index = () => {
                 : doc
             )
           );
+          
+          if (successCount === 1) {
+            toast.success(`${file.name} uploaded successfully!`);
+          }
         }, 3000);
+      } else {
+        errorCount++;
+        toast.error(`${file.name} is not a valid PDF file`);
       }
     });
+
+    if (successCount > 1) {
+      toast.success(`${successCount} PDF files uploaded successfully!`);
+    }
+    if (errorCount > 0 && successCount === 0) {
+      toast.error(`${errorCount} files failed to upload. Only PDF files are supported.`);
+    }
   };
 
   const handleQuestionSubmit = async (question: string) => {
@@ -145,6 +165,19 @@ const Index = () => {
           </div>
         </div>
       </div>
+      
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };
