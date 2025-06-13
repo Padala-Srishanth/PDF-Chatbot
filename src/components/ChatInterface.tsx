@@ -1,6 +1,6 @@
 
 import { useState, useRef, useEffect } from "react";
-import { Send, User, Bot, Earth } from "lucide-react";
+import { Send } from "lucide-react";
 import { Document, Message } from "@/pages/Index";
 
 interface ChatInterfaceProps {
@@ -40,10 +40,10 @@ export const ChatInterface = ({ document, messages, onQuestionSubmit, isProcessi
   return (
     <div className="h-full flex flex-col">
       {/* Header */}
-      <div className="p-6 border-b border-slate-200">
+      <div className="p-6 border-b border-green-200">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-            <svg className="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+          <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+            <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 0v12h8V4H6z" clipRule="evenodd" />
             </svg>
           </div>
@@ -58,7 +58,7 @@ export const ChatInterface = ({ document, messages, onQuestionSubmit, isProcessi
       <div className="flex-1 overflow-y-auto p-6 space-y-4">
         {messages.length === 0 ? (
           <div className="text-center py-12">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <img 
                 src="/lovable-uploads/29f49fb6-b4a8-4b0e-a601-ed0d7feb1cc6.png" 
                 alt="AI Assistant" 
@@ -78,11 +78,15 @@ export const ChatInterface = ({ document, messages, onQuestionSubmit, isProcessi
             >
               <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                 message.type === 'user' 
-                  ? 'bg-blue-500' 
+                  ? 'bg-green-500' 
                   : 'bg-white border-2 border-green-500'
               }`}>
                 {message.type === 'user' ? (
-                  <Earth className="w-4 h-4 text-white" />
+                  <img 
+                    src="/lovable-uploads/1b5e048e-12d6-48b0-b1ac-5c590205541a.png" 
+                    alt="User Earth" 
+                    className="w-6 h-6 rounded-full"
+                  />
                 ) : (
                   <img 
                     src="/lovable-uploads/29f49fb6-b4a8-4b0e-a601-ed0d7feb1cc6.png" 
@@ -96,7 +100,7 @@ export const ChatInterface = ({ document, messages, onQuestionSubmit, isProcessi
                 <div
                   className={`p-3 rounded-lg ${
                     message.type === 'user'
-                      ? 'bg-blue-500 text-white'
+                      ? 'bg-green-500 text-white'
                       : 'bg-slate-100 text-slate-800'
                   }`}
                 >
@@ -133,23 +137,22 @@ export const ChatInterface = ({ document, messages, onQuestionSubmit, isProcessi
       </div>
 
       {/* Input */}
-      <div className="p-6 border-t border-slate-200">
+      <div className="p-6 border-t border-green-200">
         <form onSubmit={handleSubmit} className="flex space-x-3">
           <input
             type="text"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="Ask a question about this document..."
-            className="flex-1 px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="flex-1 px-4 py-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
             disabled={isProcessing}
           />
           <button
             type="submit"
             disabled={!question.trim() || isProcessing}
-            className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
+            className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
           >
             <Send className="w-4 h-4" />
-            <span className="hidden sm:inline">Send</span>
           </button>
         </form>
       </div>
