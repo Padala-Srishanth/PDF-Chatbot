@@ -10,11 +10,11 @@ export const Header = ({ onFileUpload }: HeaderProps) => {
     <header className="bg-white border-b border-green-200 shadow-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <div className="w-12 h-12 flex items-center justify-center bg-white rounded-lg shadow-sm border border-green-200">
+          <div className="w-16 h-16 flex items-center justify-center bg-white rounded-lg shadow-sm border border-green-200 p-2">
             <img 
               src="/lovable-uploads/66740e26-76d0-4a36-8fe0-876b51980efd.png" 
               alt="AI Planet Logo" 
-              className="h-10 w-auto object-contain"
+              className="max-w-full max-h-full object-contain"
             />
           </div>
           

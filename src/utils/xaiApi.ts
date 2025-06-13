@@ -21,7 +21,7 @@ export const askQuestionAboutDocument = async (question: string, documentName: s
             content: question
           }
         ],
-        model: 'mixtral-8x7b-32768',
+        model: 'llama3-70b-8192',
         temperature: 0.7,
         max_tokens: 1000,
       }),
