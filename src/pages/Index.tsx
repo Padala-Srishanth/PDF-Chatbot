@@ -1,9 +1,7 @@
-
 import { useState } from "react";
 import { Header } from "@/components/Header";
 import { DocumentList } from "@/components/DocumentList";
 import { ChatInterface } from "@/components/ChatInterface";
-import { UploadArea } from "@/components/UploadArea";
 import { askQuestionAboutDocument } from "@/utils/xaiApi";
 
 export interface Document {
@@ -99,7 +97,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white">
-      <Header />
+      <Header onFileUpload={handleFileUpload} />
       
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 h-[calc(100vh-120px)]">
@@ -107,8 +105,7 @@ const Index = () => {
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-sm border border-green-200 h-full flex flex-col">
               <div className="p-6 border-b border-green-200">
-                <h2 className="text-xl font-semibold text-slate-800 mb-4">Your Documents</h2>
-                <UploadArea onFileUpload={handleFileUpload} />
+                <h2 className="text-xl font-semibold text-slate-800">Your Documents</h2>
               </div>
               
               <div className="flex-1 overflow-hidden">
