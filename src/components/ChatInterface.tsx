@@ -1,6 +1,6 @@
 
 import { useState, useRef, useEffect } from "react";
-import { Send, User, Bot } from "lucide-react";
+import { Send, User, Bot, Earth } from "lucide-react";
 import { Document, Message } from "@/pages/Index";
 
 interface ChatInterfaceProps {
@@ -59,7 +59,11 @@ export const ChatInterface = ({ document, messages, onQuestionSubmit, isProcessi
         {messages.length === 0 ? (
           <div className="text-center py-12">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Bot className="w-8 h-8 text-blue-500" />
+              <img 
+                src="/lovable-uploads/29f49fb6-b4a8-4b0e-a601-ed0d7feb1cc6.png" 
+                alt="AI Assistant" 
+                className="w-12 h-12 rounded-full"
+              />
             </div>
             <h3 className="text-lg font-semibold text-slate-800 mb-2">Start a conversation</h3>
             <p className="text-slate-600">Ask me anything about the content of your PDF document.</p>
@@ -75,12 +79,16 @@ export const ChatInterface = ({ document, messages, onQuestionSubmit, isProcessi
               <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                 message.type === 'user' 
                   ? 'bg-blue-500' 
-                  : 'bg-slate-200'
+                  : 'bg-white border-2 border-green-500'
               }`}>
                 {message.type === 'user' ? (
-                  <User className="w-4 h-4 text-white" />
+                  <Earth className="w-4 h-4 text-white" />
                 ) : (
-                  <Bot className="w-4 h-4 text-slate-600" />
+                  <img 
+                    src="/lovable-uploads/29f49fb6-b4a8-4b0e-a601-ed0d7feb1cc6.png" 
+                    alt="AI Assistant" 
+                    className="w-6 h-6 rounded-full"
+                  />
                 )}
               </div>
               
@@ -104,8 +112,12 @@ export const ChatInterface = ({ document, messages, onQuestionSubmit, isProcessi
         
         {isProcessing && (
           <div className="flex items-start space-x-3">
-            <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center">
-              <Bot className="w-4 h-4 text-slate-600" />
+            <div className="w-8 h-8 rounded-full bg-white border-2 border-green-500 flex items-center justify-center">
+              <img 
+                src="/lovable-uploads/29f49fb6-b4a8-4b0e-a601-ed0d7feb1cc6.png" 
+                alt="AI Assistant" 
+                className="w-6 h-6 rounded-full"
+              />
             </div>
             <div className="bg-slate-100 p-3 rounded-lg">
               <div className="flex space-x-1">
