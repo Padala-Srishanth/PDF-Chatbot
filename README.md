@@ -4,7 +4,6 @@
 
 Chat with your PDF using AI! This full-stack application allows users to upload PDF documents and interactively ask questions about their content using natural language.
 
-![Screenshot](./screenshot.png)
 
 ---
 
