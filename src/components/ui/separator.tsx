@@ -3,6 +3,7 @@ import * as SeparatorPrimitive from "@radix-ui/react-separator"
 
 import { cn } from "@/lib/utils"
 
+// Separator: Visual divider for separating content horizontally or vertically
 const Separator = React.forwardRef<
   React.ElementRef<typeof SeparatorPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>
@@ -13,9 +14,10 @@ const Separator = React.forwardRef<
   ) => (
     <SeparatorPrimitive.Root
       ref={ref}
-      decorative={decorative}
-      orientation={orientation}
+      decorative={decorative} // Whether the separator is decorative (not announced by screen readers)
+      orientation={orientation} // "horizontal" or "vertical"
       className={cn(
+        // Base style and orientation-specific thickness/width
         "shrink-0 bg-border",
         orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
         className
@@ -26,4 +28,5 @@ const Separator = React.forwardRef<
 )
 Separator.displayName = SeparatorPrimitive.Root.displayName
 
+// Export Separator component for use in the app
 export { Separator }

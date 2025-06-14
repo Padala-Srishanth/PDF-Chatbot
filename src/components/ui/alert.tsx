@@ -3,10 +3,13 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
+// Define alert style variants using class-variance-authority (cva)
 const alertVariants = cva(
+  // Base styles for alert container and icon positioning
   "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
   {
     variants: {
+      // Variant styles: default and destructive
       variant: {
         default: "bg-background text-foreground",
         destructive:
@@ -14,11 +17,12 @@ const alertVariants = cva(
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "default", // Use default variant if none specified
     },
   }
 )
 
+// Alert: Main alert container component
 const Alert = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
@@ -32,6 +36,7 @@ const Alert = React.forwardRef<
 ))
 Alert.displayName = "Alert"
 
+// AlertTitle: Title/heading for the alert
 const AlertTitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
@@ -44,6 +49,7 @@ const AlertTitle = React.forwardRef<
 ))
 AlertTitle.displayName = "AlertTitle"
 
+// AlertDescription: Supporting text/content for the alert
 const AlertDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
@@ -56,4 +62,5 @@ const AlertDescription = React.forwardRef<
 ))
 AlertDescription.displayName = "AlertDescription"
 
+// Export all alert components
 export { Alert, AlertTitle, AlertDescription }

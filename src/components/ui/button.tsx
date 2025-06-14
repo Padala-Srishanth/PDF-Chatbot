@@ -4,10 +4,13 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
+// Define button style variants using class-variance-authority (cva)
 const buttonVariants = cva(
+  // Base styles for all buttons: flex, rounded, font, transitions, focus, disabled, svg handling
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
+      // Visual variants for the button
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
         destructive:
@@ -19,6 +22,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
+      // Size variants for the button
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
@@ -27,21 +31,23 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      variant: "default", // Default visual variant
+      size: "default",    // Default size
     },
   }
 )
 
+// ButtonProps: Props for the Button component, includes HTML button props, variants, and asChild
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  asChild?: boolean
+  asChild?: boolean // If true, renders as a child component (e.g., for custom routing)
 }
 
+// Button: Main button component, supports variants, sizes, and custom rendering
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
+    const Comp = asChild ? Slot : "button" // Use Slot for custom component, else native button
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
@@ -53,4 +59,5 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 )
 Button.displayName = "Button"
 
+// Export Button component and buttonVariants utility
 export { Button, buttonVariants }

@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const
 
+// ChartConfig: Defines the config for each chart key (label, icon, color, theme)
 export type ChartConfig = {
   [k in string]: {
     label?: React.ReactNode
@@ -16,12 +17,15 @@ export type ChartConfig = {
   )
 }
 
+// Context props for chart configuration
 type ChartContextProps = {
   config: ChartConfig
 }
 
+// React context to provide chart config to children
 const ChartContext = React.createContext<ChartContextProps | null>(null)
 
+// Hook to access chart context, throws if not inside ChartContainer
 function useChart() {
   const context = React.useContext(ChartContext)
 
@@ -32,6 +36,7 @@ function useChart() {
   return context
 }
 
+// ChartContainer: Main wrapper for charts, provides config and styling context
 const ChartContainer = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
@@ -50,12 +55,15 @@ const ChartContainer = React.forwardRef<
         data-chart={chartId}
         ref={ref}
         className={cn(
+          // Utility classes for chart appearance and theming
           "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
           className
         )}
         {...props}
       >
+        {/* Injects theme-based CSS variables for chart colors */}
         <ChartStyle id={chartId} config={config} />
+        {/* ResponsiveContainer from recharts for responsive sizing */}
         <RechartsPrimitive.ResponsiveContainer>
           {children}
         </RechartsPrimitive.ResponsiveContainer>
@@ -65,6 +73,7 @@ const ChartContainer = React.forwardRef<
 })
 ChartContainer.displayName = "Chart"
 
+// ChartStyle: Injects CSS variables for chart colors based on theme and config
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(
     ([_, config]) => config.theme || config.color
@@ -98,8 +107,10 @@ ${colorConfig
   )
 }
 
+// ChartTooltip: Recharts tooltip primitive (for composition)
 const ChartTooltip = RechartsPrimitive.Tooltip
 
+// ChartTooltipContent: Custom tooltip content for recharts tooltips
 const ChartTooltipContent = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
@@ -131,6 +142,7 @@ const ChartTooltipContent = React.forwardRef<
   ) => {
     const { config } = useChart()
 
+    // Memoized label for tooltip
     const tooltipLabel = React.useMemo(() => {
       if (hideLabel || !payload?.length) {
         return null
@@ -177,10 +189,12 @@ const ChartTooltipContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
+          // Tooltip container styles
           "grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 text-xs shadow-xl",
           className
         )}
       >
+        {/* Show label above if not nested */}
         {!nestLabel ? tooltipLabel : null}
         <div className="grid gap-1.5">
           {payload.map((item, index) => {
@@ -196,10 +210,12 @@ const ChartTooltipContent = React.forwardRef<
                   indicator === "dot" && "items-center"
                 )}
               >
+                {/* Custom formatter if provided */}
                 {formatter && item?.value !== undefined && item.name ? (
                   formatter(item.value, item.name, item, index, item.payload)
                 ) : (
                   <>
+                    {/* Icon or indicator for each item */}
                     {itemConfig?.icon ? (
                       <itemConfig.icon />
                     ) : (
@@ -224,6 +240,7 @@ const ChartTooltipContent = React.forwardRef<
                         />
                       )
                     )}
+                    {/* Value and label for each item */}
                     <div
                       className={cn(
                         "flex flex-1 justify-between leading-none",
@@ -254,8 +271,10 @@ const ChartTooltipContent = React.forwardRef<
 )
 ChartTooltipContent.displayName = "ChartTooltip"
 
+// ChartLegend: Recharts legend primitive (for composition)
 const ChartLegend = RechartsPrimitive.Legend
 
+// ChartLegendContent: Custom legend content for recharts legends
 const ChartLegendContent = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> &
@@ -278,6 +297,7 @@ const ChartLegendContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
+          // Layout for legend items
           "flex items-center justify-center gap-4",
           verticalAlign === "top" ? "pb-3" : "pt-3",
           className
@@ -294,6 +314,7 @@ const ChartLegendContent = React.forwardRef<
                 "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
               )}
             >
+              {/* Icon or color indicator for legend */}
               {itemConfig?.icon && !hideIcon ? (
                 <itemConfig.icon />
               ) : (
@@ -353,6 +374,7 @@ function getPayloadConfigFromPayload(
     : config[key as keyof typeof config]
 }
 
+// Export all chart components and helpers for use in the app
 export {
   ChartContainer,
   ChartTooltip,

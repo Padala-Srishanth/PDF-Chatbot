@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ButtonProps, buttonVariants } from "@/components/ui/button"
 
+// Pagination: Root navigation container for pagination controls
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
     role="navigation"
@@ -14,6 +15,7 @@ const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
 )
 Pagination.displayName = "Pagination"
 
+// PaginationContent: Container for pagination items (ul)
 const PaginationContent = React.forwardRef<
   HTMLUListElement,
   React.ComponentProps<"ul">
@@ -26,6 +28,7 @@ const PaginationContent = React.forwardRef<
 ))
 PaginationContent.displayName = "PaginationContent"
 
+// PaginationItem: Single pagination item (li)
 const PaginationItem = React.forwardRef<
   HTMLLIElement,
   React.ComponentProps<"li">
@@ -34,11 +37,13 @@ const PaginationItem = React.forwardRef<
 ))
 PaginationItem.displayName = "PaginationItem"
 
+// PaginationLinkProps: Props for pagination links (page numbers, etc.)
 type PaginationLinkProps = {
-  isActive?: boolean
+  isActive?: boolean // Whether this link is the active page
 } & Pick<ButtonProps, "size"> &
   React.ComponentProps<"a">
 
+// PaginationLink: Renders a page link styled as a button
 const PaginationLink = ({
   className,
   isActive,
@@ -49,7 +54,7 @@ const PaginationLink = ({
     aria-current={isActive ? "page" : undefined}
     className={cn(
       buttonVariants({
-        variant: isActive ? "outline" : "ghost",
+        variant: isActive ? "outline" : "ghost", // Highlight if active
         size,
       }),
       className
@@ -59,6 +64,7 @@ const PaginationLink = ({
 )
 PaginationLink.displayName = "PaginationLink"
 
+// PaginationPrevious: Button to go to the previous page
 const PaginationPrevious = ({
   className,
   ...props
@@ -75,6 +81,7 @@ const PaginationPrevious = ({
 )
 PaginationPrevious.displayName = "PaginationPrevious"
 
+// PaginationNext: Button to go to the next page
 const PaginationNext = ({
   className,
   ...props
@@ -91,6 +98,7 @@ const PaginationNext = ({
 )
 PaginationNext.displayName = "PaginationNext"
 
+// PaginationEllipsis: Shows ellipsis ("...") for skipped pages
 const PaginationEllipsis = ({
   className,
   ...props
@@ -106,6 +114,7 @@ const PaginationEllipsis = ({
 )
 PaginationEllipsis.displayName = "PaginationEllipsis"
 
+// Export all pagination components for use in the app
 export {
   Pagination,
   PaginationContent,
