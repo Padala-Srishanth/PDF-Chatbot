@@ -1,5 +1,5 @@
 // Groq API key and endpoint URL (for AI chat completions)
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = "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";
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 
 // askQuestionAboutDocument: Sends a question and document context to the Groq API and returns the AI's answer
